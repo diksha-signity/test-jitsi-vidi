@@ -961,10 +961,10 @@ class Toolbox extends Component<Props, State> {
                 && <OverflowMenuProfileItem
                     key = 'profile'
                     onClick = { this._onToolbarToggleProfile } />,
-            this._shouldShowButton('videoquality')
-                && <OverflowMenuVideoQualityItem
-                    key = 'videoquality'
-                    onClick = { this._onToolbarOpenVideoQuality } />,
+            // this._shouldShowButton('videoquality')
+            //     && <OverflowMenuVideoQualityItem
+            //         key = 'videoquality'
+            //         onClick = { this._onToolbarOpenVideoQuality } />,
             this._shouldShowButton('fullscreen')
                 && <OverflowMenuItem
                     accessibilityLabel = { t('toolbar.accessibilityLabel.fullScreen') }
@@ -972,27 +972,27 @@ class Toolbox extends Component<Props, State> {
                     key = 'fullscreen'
                     onClick = { this._onToolbarToggleFullScreen }
                     text = { _fullScreen ? t('toolbar.exitFullScreen') : t('toolbar.enterFullScreen') } />,
-            <LiveStreamButton
-                key = 'livestreaming'
-                showLabel = { true } />,
-            <RecordButton
-                key = 'record'
-                showLabel = { true } />,
-            this._shouldShowButton('sharedvideo')
-                && <OverflowMenuItem
-                    accessibilityLabel = { t('toolbar.accessibilityLabel.sharedvideo') }
-                    icon = { IconShareVideo }
-                    key = 'sharedvideo'
-                    onClick = { this._onToolbarToggleSharedVideo }
-                    text = { _sharingVideo ? t('toolbar.stopSharedVideo') : t('toolbar.sharedvideo') } />,
-            this._shouldShowButton('etherpad')
-                && <SharedDocumentButton
-                    key = 'etherpad'
-                    showLabel = { true } />,
-            <VideoBlurButton
-                key = 'videobackgroundblur'
-                showLabel = { true }
-                visible = { this._shouldShowButton('videobackgroundblur') && !_screensharing } />,
+            // <LiveStreamButton
+            //     key = 'livestreaming'
+            //     showLabel = { true } />,
+            // <RecordButton
+            //     key = 'record'
+            //     showLabel = { true } />,
+            // this._shouldShowButton('sharedvideo')
+            //     && <OverflowMenuItem
+            //         accessibilityLabel = { t('toolbar.accessibilityLabel.sharedvideo') }
+            //         icon = { IconShareVideo }
+            //         key = 'sharedvideo'
+            //         onClick = { this._onToolbarToggleSharedVideo }
+            //         text = { _sharingVideo ? t('toolbar.stopSharedVideo') : t('toolbar.sharedvideo') } />,
+            // this._shouldShowButton('etherpad')
+            //     && <SharedDocumentButton
+            //         key = 'etherpad'
+            //         showLabel = { true } />,
+            // <VideoBlurButton
+            //     key = 'videobackgroundblur'
+            //     showLabel = { true }
+            //     visible = { this._shouldShowButton('videobackgroundblur') && !_screensharing } />,
             <SettingsButton
                 key = 'settings'
                 showLabel = { true }
@@ -1174,9 +1174,9 @@ class Toolbox extends Component<Props, State> {
                 && this._isDesktopSharingButtonVisible()) {
             buttonsLeft.push('desktop');
         }
-        if (this._shouldShowButton('raisehand')) {
-            buttonsLeft.push('raisehand');
-        }
+        // if (this._shouldShowButton('raisehand')) {
+        //     buttonsLeft.push('raisehand');
+        // }
         if (this._shouldShowButton('chat')) {
             buttonsLeft.push('chat');
         }
@@ -1235,15 +1235,15 @@ class Toolbox extends Component<Props, State> {
         return (
             <div className = 'toolbox-content'>
                 <div className = 'button-group-left'>
-                    { buttonsLeft.indexOf('desktop') !== -1
-                        && this._renderDesktopSharingButton() }
-                    { buttonsLeft.indexOf('raisehand') !== -1
+                    {/* { buttonsLeft.indexOf('desktop') !== -1
+                        && this._renderDesktopSharingButton() } */}
+                    {/* { buttonsLeft.indexOf('raisehand') !== -1
                         && <ToolbarButton
                             accessibilityLabel = { t('toolbar.accessibilityLabel.raiseHand') }
                             icon = { IconRaisedHand }
                             onClick = { this._onToolbarToggleRaiseHand }
                             toggled = { _raisedHand }
-                            tooltip = { t('toolbar.raiseHand') } /> }
+                            tooltip = { t('toolbar.raiseHand') } /> } */}
                     { buttonsLeft.indexOf('chat') !== -1
                         && <div className = 'toolbar-button-with-badge'>
                             <ToolbarButton
@@ -1266,12 +1266,12 @@ class Toolbox extends Component<Props, State> {
                     { this._renderVideoButton() }
                 </div>
                 <div className = 'button-group-right'>
-                    { buttonsRight.indexOf('localrecording') !== -1
+                    {/* { buttonsRight.indexOf('localrecording') !== -1
                         && <LocalRecordingButton
                             onClick = {
                                 this._onToolbarOpenLocalRecordingInfoDialog
                             } />
-                    }
+                    } */}
                     { buttonsRight.indexOf('tileview') !== -1
                         && <TileViewButton /> }
                     { buttonsRight.indexOf('invite') !== -1
