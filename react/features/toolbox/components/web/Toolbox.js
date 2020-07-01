@@ -303,6 +303,7 @@ class Toolbox extends Component<Props, State> {
         });
 
         window.addEventListener('resize', this._onResize);
+        this._doToggleWebChat();
     }
 
     /**
@@ -403,6 +404,26 @@ class Toolbox extends Component<Props, State> {
     _doOpenVideoQuality() {
         this.props.dispatch(openDialog(VideoQualityDialog));
     }
+
+   
+    /**
+     * Dispatches an action to toggle the display of chat only in case of web.
+     *
+     * @private
+     * @returns {void}
+     */
+    _doToggleWebChat() {
+        if(this.state.windowWidth >= 991){
+            sendAnalytics(createToolbarEvent(
+                'toggle.chat',
+                {
+                    enable: false
+                }));
+
+            this._doToggleChat();
+        }
+    }
+
 
     /**
      * Dispatches an action to toggle the display of chat.
