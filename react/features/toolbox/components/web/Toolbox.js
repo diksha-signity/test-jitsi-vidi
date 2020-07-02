@@ -413,8 +413,6 @@ class Toolbox extends Component<Props, State> {
      * @returns {void}
      */
     _doToggleWebChat() {
-        console.log('props--->',this.props)
-        console.log('Moderator--->',this.props.isModerator)
         if(this.state.windowWidth >= 991){
             sendAnalytics(createToolbarEvent(
                 'toggle.chat',
