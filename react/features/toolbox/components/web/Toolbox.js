@@ -413,6 +413,8 @@ class Toolbox extends Component<Props, State> {
      * @returns {void}
      */
     _doToggleWebChat() {
+        console.log('props--->',this.props)
+        console.log('Moderator--->',this.props.isModerator)
         if(this.state.windowWidth >= 991){
             sendAnalytics(createToolbarEvent(
                 'toggle.chat',
@@ -1018,10 +1020,10 @@ class Toolbox extends Component<Props, State> {
                 key = 'settings'
                 showLabel = { true }
                 visible = { this._shouldShowButton('settings') } />,
-            <MuteEveryoneButton
-                key = 'mute-everyone'
-                showLabel = { true }
-                visible = { this._shouldShowButton('mute-everyone') } />,
+            // <MuteEveryoneButton
+            //     key = 'mute-everyone'
+            //     showLabel = { true }
+            //     visible = { this._shouldShowButton('mute-everyone') } />,
             this._shouldShowButton('stats')
                 && <OverflowMenuItem
                     accessibilityLabel = { t('toolbar.accessibilityLabel.speakerStats') }
@@ -1281,6 +1283,10 @@ class Toolbox extends Component<Props, State> {
                     }
                 </div>
                 <div className = 'button-group-center'>
+                    <MuteEveryoneButton
+                    key = 'mute-everyone'
+                    showLabel = { false }
+                    visible = { this._shouldShowButton('mute-everyone') } />,
                     { this._renderAudioButton() }
                     <HangupButton
                         visible = { this._shouldShowButton('hangup') } />
