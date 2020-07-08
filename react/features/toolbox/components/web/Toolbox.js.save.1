@@ -26,7 +26,7 @@ import {
 import {
     getLocalParticipant,
     getParticipants,
-    participantUpdated, PARTICIPANT_ROLE
+    participantUpdated
 } from '../../../base/participants';
 import { connect, equals } from '../../../base/redux';
 import { OverflowMenuItem } from '../../../base/toolbox';
@@ -131,10 +131,7 @@ type Props = {
      * Whether or not the current user is logged in through a JWT.
      */
     _isGuest: boolean,
-/**
-* Whether or not the current user is Moderator.
-*/	
-_isModerator : boolean,
+
     /**
      * The ID of the local participant.
      */
@@ -973,7 +970,6 @@ class Toolbox extends Component<Props, State> {
      */
     _renderOverflowMenuContent() {
         const {
-		_isModerator,
             _feedbackConfigured,
             _fullScreen,
             _screensharing,
@@ -1026,7 +1022,7 @@ class Toolbox extends Component<Props, State> {
             //     key = 'mute-everyone'
             //     showLabel = { true }
             //     visible = { this._shouldShowButton('mute-everyone') } />,
-            this._shouldShowButton('stats') && _isModerator && <OverflowMenuItem
+            this._isUserModerator() && <OverflowMenuItem
                     accessibilityLabel = { t('toolbar.accessibilityLabel.speakerStats') }
                     icon = { IconPresentation }
                     key = 'stats'
@@ -1287,7 +1283,7 @@ class Toolbox extends Component<Props, State> {
                     <MuteEveryoneButton
                     key = 'mute-everyone'
                     showLabel = { false }
-                    visible = { this._shouldShowButton('mute-everyone') } />
+                    visible = { this._shouldShowButton('mute-everyone') } />,
                     { this._renderAudioButton() }
                     <HangupButton
                         visible = { this._shouldShowButton('hangup') } />
@@ -1398,8 +1394,7 @@ function _mapStateToProps(state) {
         _fullScreen: fullScreen,
         _tileViewEnabled: state['features/video-layout'].tileViewEnabled,
         _localParticipantID: localParticipant.id,
-_isModerator : localParticipant.role === PARTICIPANT_ROLE.MODERATOR,        
-_localRecState: localRecordingStates,
+        _localRecState: localRecordingStates,
         _locked: locked,
         _overflowMenuVisible: overflowMenuVisible,
         _raisedHand: localParticipant.raisedHand,
