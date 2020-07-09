@@ -1003,13 +1003,13 @@ class Toolbox extends Component<Props, State> {
             // <RecordButton
             //     key = 'record'
             //     showLabel = { true } />,
-            // this._shouldShowButton('sharedvideo')
-            //     && <OverflowMenuItem
-            //         accessibilityLabel = { t('toolbar.accessibilityLabel.sharedvideo') }
-            //         icon = { IconShareVideo }
-            //         key = 'sharedvideo'
-            //         onClick = { this._onToolbarToggleSharedVideo }
-            //         text = { _sharingVideo ? t('toolbar.stopSharedVideo') : t('toolbar.sharedvideo') } />,
+            this._shouldShowButton('sharedvideo')
+                && <OverflowMenuItem
+                    accessibilityLabel = { t('toolbar.accessibilityLabel.sharedvideo') }
+                    icon = { IconShareVideo }
+                    key = 'sharedvideo'
+                    onClick = { this._onToolbarToggleSharedVideo }
+                    text = { _sharingVideo ? t('toolbar.stopSharedVideo') : t('toolbar.sharedvideo') } />,
             // this._shouldShowButton('etherpad')
             //     && <SharedDocumentButton
             //         key = 'etherpad'
@@ -1154,6 +1154,28 @@ class Toolbox extends Component<Props, State> {
     }
 
     /**
+     * Renders the Hangup button.
+     *
+     * @returns {ReactElement}
+     */
+    _renderHangupButton() {
+        const {
+                _sharingVideo,
+                t
+            } = this.props;
+        return this._shouldShowButton('sharedvideo') 
+        && _sharingVideo 
+            ? <OverflowMenuItem
+            accessibilityLabel = { t('toolbar.accessibilityLabel.sharedvideo') }
+            icon = { IconShareVideo }
+            key = 'sharedvideo'
+            onClick = { this._onToolbarToggleSharedVideo }
+            text = { t('toolbar.stopSharedVideo') } />
+            : <HangupButton
+                visible = { this._shouldShowButton('hangup') } />;
+    }
+
+    /**
      * Renders the Video controlling button.
      *
      * @returns {ReactElement}
@@ -1289,8 +1311,7 @@ class Toolbox extends Component<Props, State> {
                     showLabel = { false }
                     visible = { this._shouldShowButton('mute-everyone') } />
                     { this._renderAudioButton() }
-                    <HangupButton
-                        visible = { this._shouldShowButton('hangup') } />
+                    { this._renderHangupButton() }
                     { this._renderVideoButton() }
                 </div>
                 <div className = 'button-group-right'>
