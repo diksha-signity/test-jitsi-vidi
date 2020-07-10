@@ -76,6 +76,7 @@ import HelpButton from '../HelpButton';
 
 import AudioSettingsButton from './AudioSettingsButton';
 import MuteEveryoneButton from './MuteEveryoneButton';
+import LivestreamPresentationModeButton from './LivestreamPresentationModeButton';
 import OverflowMenuButton from './OverflowMenuButton';
 import OverflowMenuProfileItem from './OverflowMenuProfileItem';
 import ToolbarButton from './ToolbarButton';
@@ -1003,7 +1004,7 @@ class Toolbox extends Component<Props, State> {
             // <RecordButton
             //     key = 'record'
             //     showLabel = { true } />,
-            this._shouldShowButton('sharedvideo')
+            this._shouldShowButton('sharedvideo') && _isModerator
                 && <OverflowMenuItem
                     accessibilityLabel = { t('toolbar.accessibilityLabel.sharedvideo') }
                     icon = { IconShareVideo }
@@ -1163,14 +1164,11 @@ class Toolbox extends Component<Props, State> {
                 _sharingVideo,
                 t
             } = this.props;
-        return this._shouldShowButton('sharedvideo') 
-        && _sharingVideo 
-            ? <OverflowMenuItem
-            accessibilityLabel = { t('toolbar.accessibilityLabel.sharedvideo') }
-            icon = { IconShareVideo }
+        return _sharingVideo 
+            ? <LivestreamPresentationModeButton
             key = 'sharedvideo'
-            onClick = { this._onToolbarToggleSharedVideo }
-            text = { t('toolbar.stopSharedVideo') } />
+            showLabel = { false }
+            visible = { this._shouldShowButton('sharedvideo') }/>
             : <HangupButton
                 visible = { this._shouldShowButton('hangup') } />;
     }
