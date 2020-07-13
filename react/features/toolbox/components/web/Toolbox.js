@@ -81,7 +81,8 @@ import OverflowMenuButton from './OverflowMenuButton';
 import OverflowMenuProfileItem from './OverflowMenuProfileItem';
 import ToolbarButton from './ToolbarButton';
 import VideoSettingsButton from './VideoSettingsButton';
-
+import VolumeSlider from '../../../remote-video-menu/components/web/VolumeSlider'
+import VideoLayout from '../../../../../modules/UI/videolayout/VideoLayout'
 /**
  * The type of the React {@code Component} props of {@link Toolbox}.
  */
@@ -132,10 +133,12 @@ type Props = {
      * Whether or not the current user is logged in through a JWT.
      */
     _isGuest: boolean,
-/**
-* Whether or not the current user is Moderator.
-*/	
-_isModerator : boolean,
+
+    /**
+    * Whether or not the current user is Moderator.
+    */	
+    _isModerator : boolean,
+    
     /**
      * The ID of the local participant.
      */
@@ -201,7 +204,12 @@ type State = {
     /**
      * The width of the browser's window.
      */
-    windowWidth: number
+    windowWidth: number,
+
+    /**
+     * current value of volume slider.
+     */
+    currentVolVal: number
 };
 
 declare var APP: Object;
@@ -250,9 +258,10 @@ class Toolbox extends Component<Props, State> {
         this._onToolbarToggleSharedVideo = this._onToolbarToggleSharedVideo.bind(this);
         this._onToolbarOpenLocalRecordingInfoDialog = this._onToolbarOpenLocalRecordingInfoDialog.bind(this);
         this._onShortcutToggleTileView = this._onShortcutToggleTileView.bind(this);
-
+        this._setAudioVolume = this._setAudioVolume.bind(this);
         this.state = {
-            windowWidth: window.innerWidth
+            windowWidth: window.innerWidth,
+            currentVolVal: 1
         };
     }
 
@@ -1142,6 +1151,34 @@ class Toolbox extends Component<Props, State> {
     }
 
     /**
+     * Renders the Audio Slider.
+     *
+     * @returns {ReactElement}
+     */
+    _renderAudioSlider() {
+        const {
+            _sharingVideo,
+            _isModerator
+        } = this.props;
+        return _sharingVideo && _isModerator
+            ? <VolumeSlider
+            initialValue = { this.state.currentVolVal }
+            key = 'volume-slider'
+            onChange = { this._setAudioVolume } />
+            : null;
+    }
+
+    /**
+     * Change the remote participant's volume level.
+     *
+     * @param {int} newVal - The value to set the slider to.
+     */
+    _setAudioVolume(newVal) {
+        this.setState({currentVolVal:newVal})
+        VideoLayout.updateVolume(newVal);
+    }
+
+    /**
      * Renders the Audio controlling button.
      *
      * @returns {ReactElement}
@@ -1308,6 +1345,7 @@ class Toolbox extends Component<Props, State> {
                     key = 'mute-everyone'
                     showLabel = { false }
                     visible = { this._shouldShowButton('mute-everyone') } />
+                    { this._renderAudioSlider() }
                     { this._renderAudioButton() }
                     { this._renderHangupButton() }
                     { this._renderVideoButton() }
@@ -1417,8 +1455,8 @@ function _mapStateToProps(state) {
         _fullScreen: fullScreen,
         _tileViewEnabled: state['features/video-layout'].tileViewEnabled,
         _localParticipantID: localParticipant.id,
-_isModerator : localParticipant.role === PARTICIPANT_ROLE.MODERATOR,        
-_localRecState: localRecordingStates,
+        _isModerator : localParticipant.role === PARTICIPANT_ROLE.MODERATOR,        
+        _localRecState: localRecordingStates,
         _locked: locked,
         _overflowMenuVisible: overflowMenuVisible,
         _raisedHand: localParticipant.raisedHand,

@@ -161,7 +161,6 @@ const VideoLayout = {
     onRemoteStreamAdded(stream) {
         const id = stream.getParticipantId();
         const remoteVideo = remoteVideos[id];
-
         logger.debug(`Received a new ${stream.getType()} stream for ${id}`);
 
         if (!remoteVideo) {
@@ -178,6 +177,21 @@ const VideoLayout = {
         } else {
             this.onVideoMute(id, stream.isMuted());
         }
+    },
+
+    updateVolume(newVal){
+        if(!Object.keys(remoteVideos).length){
+            return;
+        }
+        const state = APP.store.getState();
+        const participantIds = state['features/base/participants']
+            .map(p => p.id);
+        participantIds.map(id => {
+            let remoteVideo = remoteVideos[id];
+            if(remoteVideo && remoteVideo.user){
+                remoteVideo.updateAudioVolume(newVal);
+            }
+        })
     },
 
     onRemoteStreamRemoved(stream) {

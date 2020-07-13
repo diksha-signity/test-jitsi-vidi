@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import type { Dispatch } from 'redux';
 
 import { openDialog } from '../../../base/dialog';
-import { getParticipantCount } from '../../../base/participants';
+import { getParticipantCount, getLocalParticipant, PARTICIPANT_ROLE } from '../../../base/participants';
 import { connect } from '../../../base/redux';
 import { SpeakerStats } from '../../../speaker-stats';
 
@@ -22,6 +22,11 @@ type Props = {
      * Conference data.
      */
     conference: Object,
+
+    /*
+     ** Whether the local participant is a moderator or not.
+     */
+    isModerator: Boolean,
 
     /**
      * Invoked to open Speaker stats.
@@ -57,9 +62,10 @@ class ParticipantsCount extends PureComponent<Props> {
      * @returns {void}
      */
     _onClick() {
-        const { dispatch, conference } = this.props;
-
-        dispatch(openDialog(SpeakerStats, { conference }));
+        const { dispatch, conference,isModerator } = this.props;
+        if(isModerator){
+            dispatch(openDialog(SpeakerStats, { conference }));
+        }
     }
 
     /**
@@ -92,7 +98,10 @@ class ParticipantsCount extends PureComponent<Props> {
  * @returns {Props}
  */
 function mapStateToProps(state) {
+    const localParticipant = getLocalParticipant(state);
+    const isModerator = localParticipant.role === PARTICIPANT_ROLE.MODERATOR;
     return {
+        isModerator,
         conference: state['features/base/conference'].conference,
         count: getParticipantCount(state)
     };

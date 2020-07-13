@@ -468,6 +468,19 @@ export default class RemoteVideo extends SmallVideo {
         streamElement.addEventListener('canplay', listener);
     }
 
+
+    /**
+     * Change the volume level of all remote participants.
+     *
+     * @param {int} newVal - The value to set the slider to.
+     */
+    updateAudioVolume(newVal) {
+        if (this._audioStreamElement) {
+            this._audioStreamElement.volume = newVal;
+            return true;
+        }
+    }
+
     /**
      *
      * @param {*} stream
@@ -501,7 +514,6 @@ export default class RemoteVideo extends SmallVideo {
 
         if (!isVideo) {
             this._audioStreamElement = streamElement;
-
             // If the remote video menu was created before the audio stream was
             // attached we need to update the menu in order to show the volume
             // slider.
