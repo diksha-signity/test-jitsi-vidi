@@ -28,6 +28,8 @@ let eventEmitter = null;
 
 let largeVideo;
 
+let volume = 1;
+
 /**
  * flipX state of the localVideo
  */
@@ -169,7 +171,7 @@ const VideoLayout = {
             return;
         }
 
-        remoteVideo.addRemoteStreamElement(stream);
+        remoteVideo.addRemoteStreamElement(stream, volume);
 
         // Make sure track's muted state is reflected
         if (stream.getType() === 'audio') {
@@ -180,6 +182,7 @@ const VideoLayout = {
     },
 
     updateVolume(newVal){
+        volume = newVal;
         if(!Object.keys(remoteVideos).length){
             return;
         }
