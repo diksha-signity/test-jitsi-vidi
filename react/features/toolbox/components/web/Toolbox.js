@@ -1199,9 +1199,10 @@ class Toolbox extends Component<Props, State> {
     _renderHangupButton() {
         const {
                 _sharingVideo,
+                _isModerator,
                 t
             } = this.props;
-        return _sharingVideo 
+        return _sharingVideo && _isModerator
             ? <LivestreamPresentationModeButton
             key = 'sharedvideo'
             showLabel = { false }
