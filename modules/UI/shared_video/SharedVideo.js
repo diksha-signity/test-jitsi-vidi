@@ -23,6 +23,7 @@ import Filmstrip from '../videolayout/Filmstrip';
 import LargeContainer from '../videolayout/LargeContainer';
 import VideoLayout from '../videolayout/VideoLayout';
 
+import { setVideoMuted } from '../../../react/features/base/media';
 const logger = Logger.getLogger(__filename);
 
 export const SHARED_VIDEO_CONTAINER_TYPE = 'sharedvideo';
@@ -139,6 +140,8 @@ export default class SharedVideoManager {
         if (this.isSharedVideoShown) {
             return;
         }
+
+        APP.store.dispatch(setVideoMuted(true));
 
         this.isSharedVideoShown = true;
 

@@ -123,7 +123,7 @@ StateListenerRegistry.register(
 
             if (getState()['features/chat'].isOpen) {
                 // Closes the chat if it's left open.
-                dispatch(toggleChat());
+                // dispatch(toggleChat());
             }
 
             // Clear chat messages.
