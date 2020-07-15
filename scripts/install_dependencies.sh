@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /home/dev/jitsi-meet/
+cd /home/dev/test-jitsi-vidi
 npm i
